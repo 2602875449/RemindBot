@@ -1,0 +1,21 @@
+{
+  "name": "remind-bot",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "author": "QI",
+  "dependencies": {
+    "content-disposition": "^0.5.4",
+    "cron": "^2.1.0",
+    "express": "^4.18.1",
+    "node-xlsx": "^0.21.0",
+    "oicq": "^2.2.0",
+    "puppeteer": "^17.0.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "^16.6.1"
+  }
+}
