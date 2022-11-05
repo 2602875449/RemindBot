@@ -73,6 +73,7 @@ function sendMsg(msg) {
 }
 
 bot.on("message.group", function (msg) {
+    //当有消息是才会触发
     msgArray.forEach(function (value) {
         if (msg.raw_message.includes(value)) {
             sendMsg(msg);
