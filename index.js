@@ -1,8 +1,8 @@
 "use strict"
 const {createClient} = require("oicq")
 
-// const account = 3423980682
-const account = 2103883644
+const account = 3423980682
+// const account = 2103883644
 
 const bot = createClient(account)
 

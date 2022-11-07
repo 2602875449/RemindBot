@@ -5,8 +5,8 @@ const {segment} = require("oicq");
 const CronJob = require("cron").CronJob;
 
 //提醒健康打卡的群聊
-// const groupId = 737808460;
-const groupId = 718241769;
+const groupId = 737808460;
+// const groupId = 718241769;
 
 //这里放入奕辅导有管理员权限的token
 const userAccessToken = '4h40DcionWzhOHlFbYLtSrYApAL+AdQEfaTFnj6FiBTiHIw7irVbVemJuyfpfYcA1bt5U+yODqQA7CyrmCn+7AVYKlWkFmKaXmGbJO4LZ0nmHkhJnX6332SdJ8udG9ls2kjxfYjqsaw/M9AiZ2Glqg==';
@@ -41,17 +41,23 @@ async function ConstructionMsg(msg) {
     //没健康打卡的人
     let nameList = [];
     nameList.push(...await getNotReadListNames());
+    let names = [];
+    nameList.forEach(value => {
+        names.push(value.userName);
+    })
+
     let memberMap = await bot.getGroupMemberList(groupId);
     //匹配群成员放入qqList中
     let qqList = [];
     memberMap.forEach(value => {
-        nameList.forEach(name => {
-            if (value.card.match(name)) {
+        names.forEach(names => {
+            if (value.card.match(names)) {
                 qqList.push(value.user_id);
             }
         })
     })
     // 生成消息
+
     let message = [msg];
     qqList.forEach(item => {
         message.push(segment.at(item));
@@ -59,16 +65,24 @@ async function ConstructionMsg(msg) {
 
     if (qqList.length === 0) {
         message = [];
-        message.push("今日健康打卡全部完成!");
+        message.push("今日健康打卡全部完成！");
     }
     return message;
 }
 
 
+bot.on("message.group", async (msg) => {
+    if (msg.raw_message === "未打卡") {
+        let message = await ConstructionMsg("");
+        await msg.group.sendMsg(message);
+    }
+})
+
+
 //定时提醒还能继续优化
 //定时提醒
-new CronJob('30 7 * * *', async () => {
-    let msg = "提醒健康打卡，"
+new CronJob('26 7 * * *', async () => {
+    let msg = "健康打卡提醒，"
     let message = await ConstructionMsg(msg);
     //发送消息
     bot.sendGroupMsg(groupId, message);

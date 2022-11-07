@@ -2,7 +2,7 @@
 const xlsx = require('node-xlsx');
 const {bot} = require("./index");
 const {segment} = require("oicq");
-const cron = require('node-cron')
+const CronJob = require('cron').CronJob
 // excel文件类径
 const excelFilePath = "./excelList/1.xlsx"
 const sheets = xlsx.parse(excelFilePath);
@@ -29,14 +29,13 @@ function getNames(sheetName) {
 }
 
 //构造qq消息
-async function ConstructionMsg(day, msg) {
+async function ConstructionMsg(day, msg, gruop) {
     let names = [];
-    let qqList = [];
-    let message = [];
     //获取名字
-    names = getNames(msg.raw_message.slice(2, 5));
-    // console.log(names);
+    names = getNames(gruop);
+
     //获取群员名字
+    let qqList = [];
     let memberMap = await msg.group.getMemberMap();
     memberMap.forEach(value => {
         names.forEach(names => {
@@ -45,7 +44,9 @@ async function ConstructionMsg(day, msg) {
             }
         })
     })
-    message.push(`${day}核酸共，${qqList.length}人`);
+    //开始构造消息
+    let message = [];
+    message.push(`${day}核酸共：${qqList.length}人,`);
     //@响应的同学
     qqList.forEach(item => {
         message.push(segment.at(item));
@@ -53,29 +54,29 @@ async function ConstructionMsg(day, msg) {
     return message;
 }
 
+async function sendMsg(msg, group) {
+    // 发送消息
+    let newVar1 = await ConstructionMsg("明天", msg, group);
+    await msg.group.sendMsg(newVar1);
+    new CronJob(
+        '25 7 * * *', async function () {
+            let newVar = await ConstructionMsg("今天", msg, group);
+            await msg.group.sendMsg(newVar);
+            this.stop();
+        }, null, true, 'Asia/Shanghai');
+}
+
 //把表格中的sheet.name拿到放到 msgArray
 let msgArray = [];
 sheets.map(value => {
-    msgArray.push("明天" + value.name + "核酸");
+    msgArray.push(value.name);
 });
 
-function sendMsg(msg) {
-    // 发送消息
-    ConstructionMsg("明天", msg).then(r => {
-        msg.group.sendMsg(r);
-    });
-    // let torn = cron.schedule('20 7 * * *', () => {
-    //     ConstructionMsg('今天', msg).then(r => {
-    //         msg.group.sendMsg(r);
-    //     })
-    // });
-    // torn.stop();
-}
-
 bot.on("message.group", function (msg) {
+    //当有消息是才会触发
     msgArray.forEach(function (value) {
-        if (msg.raw_message.includes(value)) {
-            sendMsg(msg);
+        if (msg.raw_message.match(value)) {
+            sendMsg(msg, value);
         }
     })
 })
