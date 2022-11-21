@@ -22,7 +22,7 @@ function getNames(sheetName) {
     let names = [];
     namesArray.filter((value) => {
         return (value[1] !== "姓名")
-    }).forEach((name) => {
+    }).forEach(name => {
         names.push(name[1]);
     });
     return names;

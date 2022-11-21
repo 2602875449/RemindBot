@@ -4,9 +4,7 @@ const {bot} = require("./index");
 const {segment} = require("oicq");
 const CronJob = require("cron").CronJob;
 
-//提醒健康打卡的群聊
-const groupId = 737808460;
-// const groupId = 718241769;
+const groupId = 123456789
 
 //这里放入奕辅导有管理员权限的token
 const userAccessToken = '4h40DcionWzhOHlFbYLtSrYApAL+AdQEfaTFnj6FiBTiHIw7irVbVemJuyfpfYcA1bt5U+yODqQA7CyrmCn+7AVYKlWkFmKaXmGbJO4LZ0nmHkhJnX6332SdJ8udG9ls2kjxfYjqsaw/M9AiZ2Glqg==';
