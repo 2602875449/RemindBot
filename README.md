@@ -9,7 +9,7 @@
 
 1. 安装最新版本[node.js](https://nodejs.org/zh-cn/)、
 
-2. 需要在excelList下加入的本班级的核酸表
+2. 需要在excelList下加入的班级的核酸表(默认读取的是第二行姓名)
 
 3. ![image-20221109202937090](./assets/image-20221109202937090-1667996995870-1.png)
 
@@ -23,11 +23,11 @@
 
 8. 去`config.js`里面配置您的账号信息
 
-9. 默认使用qq扫码登录，有时间折腾可以使用如下方法：
+9. 默认使用qq扫码登录，有时间折腾可以使用如下方法(试了几遍都没成功)：
 
    [使用密码登录 (滑动验证码教程) · takayama-lily/oicq Wiki (github.com)](https://github.com/takayama-lily/oicq/wiki/01.使用密码登录-(滑动验证码教程))
 
-10. 使用node index.js即可运行服务，在Linux上可安装tmux模块让服务永远在后太运行。
+10. 使用node index.js即可运行服务，在Linux上可安装tmux模块让服务永远在后台运行。
 
     #### Tips
 

@@ -1,4 +1,7 @@
 "use strict"
+/**
+ * 请求事件
+ */
 const {bot} = require("./index")
 
 // 同意好友申请

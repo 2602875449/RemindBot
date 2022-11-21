@@ -1,3 +1,6 @@
+/**
+ * 进行提醒今天和明天哪一组核酸
+ */
 "use strict"
 const xlsx = require('node-xlsx');
 const {bot} = require("./index");

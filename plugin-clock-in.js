@@ -1,3 +1,6 @@
+/**
+ * 该文件用来自动提醒打卡功能 每天7：26 9：30进行提醒健康打卡
+ */
 "use strict"
 const axios = require("axios");
 const {bot} = require("./index");
